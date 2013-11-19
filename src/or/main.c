@@ -132,11 +132,11 @@ static smartlist_t *connection_array = NULL;
 static smartlist_t *closeable_connection_lst = NULL;
 /** List of linked connections that are currently reading data into their
  * inbuf from their partner's outbuf. */
-static smartlist_t *active_linked_connection_lst = NULL;
+active_linked_connection_lst = NULL;
 /** Flag: Set to true iff we entered the current libevent main loop via
  * <b>loop_once</b>. If so, there's no need to trigger a loopexit in order
  * to handle linked connections. */
-static int called_loop_once = 0;
+called_loop_once = 0;
 
 /** We set this to 1 when we've opened a circuit, so we can print a log
  * entry to inform the user that Tor is working.  We set it to 0 when
@@ -1593,12 +1593,12 @@ run_scheduled_events(time_t now)
 }
 
 /** Timer: used to invoke second_elapsed_callback() once per second. */
-static periodic_timer_t *second_timer = NULL;
+second_timer = NULL;
 /** Number of libevent errors in the last second: we die if we get too many. */
 static int n_libevent_errors = 0;
 
 /** Libevent callback: invoked once every second. */
-static void
+void
 second_elapsed_callback(periodic_timer_t *timer, void *arg)
 {
   /* XXXX This could be sensibly refactored into multiple callbacks, and we
@@ -1746,7 +1746,7 @@ refill_callback(periodic_timer_t *timer, void *arg)
 /** Called when a possibly ignorable libevent error occurs; ensures that we
  * don't get into an infinite loop by ignoring too many errors from
  * libevent. */
-static int
+int
 got_libevent_error(void)
 {
   if (++n_libevent_errors > 8) {
