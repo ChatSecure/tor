@@ -76,7 +76,6 @@ static void dumpmemusage(int severity);
 static void dumpstats(int severity); /* log stats */
 static void conn_read_callback(evutil_socket_t fd, short event, void *_conn);
 static void conn_write_callback(evutil_socket_t fd, short event, void *_conn);
-static void second_elapsed_callback(periodic_timer_t *timer, void *args);
 static int conn_close_if_marked(int i);
 static void connection_start_reading_from_linked_conn(connection_t *conn);
 static int connection_should_read_from_linked_conn(connection_t *conn);
@@ -132,11 +131,11 @@ static smartlist_t *connection_array = NULL;
 static smartlist_t *closeable_connection_lst = NULL;
 /** List of linked connections that are currently reading data into their
  * inbuf from their partner's outbuf. */
-active_linked_connection_lst = NULL;
+smartlist_t *active_linked_connection_lst = NULL;
 /** Flag: Set to true iff we entered the current libevent main loop via
  * <b>loop_once</b>. If so, there's no need to trigger a loopexit in order
  * to handle linked connections. */
-called_loop_once = 0;
+int called_loop_once = 0;
 
 /** We set this to 1 when we've opened a circuit, so we can print a log
  * entry to inform the user that Tor is working.  We set it to 0 when
@@ -1593,7 +1592,7 @@ run_scheduled_events(time_t now)
 }
 
 /** Timer: used to invoke second_elapsed_callback() once per second. */
-second_timer = NULL;
+periodic_timer_t *second_timer = NULL;
 /** Number of libevent errors in the last second: we die if we get too many. */
 static int n_libevent_errors = 0;
 
