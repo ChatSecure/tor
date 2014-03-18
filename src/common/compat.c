@@ -1705,12 +1705,12 @@ tor_disable_debugger_attach(void)
   r = prctl(PR_SET_DUMPABLE, 0);
 #endif
 #endif
-#if defined(__APPLE__) && defined(PT_DENY_ATTACH)
-  if (r < 0) {
-    attempted = 1;
-    r = ptrace(PT_DENY_ATTACH, 0, 0, 0);
-  }
-#endif
+//#if defined(__APPLE__) && defined(PT_DENY_ATTACH)
+//  if (r < 0) {
+//    attempted = 1;
+//    r = ptrace(PT_DENY_ATTACH, 0, 0, 0);
+//  }
+//#endif
 
   // XXX: TODO - Mac OS X has dtrace and this may be disabled.
   // XXX: TODO - Windows probably has something similar
@@ -1861,28 +1861,28 @@ make_path_absolute(char *fname)
 #endif
 }
 
-#ifndef HAVE__NSGETENVIRON
+//#ifndef HAVE__NSGETENVIRON
 #ifndef HAVE_EXTERN_ENVIRON_DECLARED
 /* Some platforms declare environ under some circumstances, others don't. */
 #ifndef RUNNING_DOXYGEN
 extern char **environ;
 #endif
 #endif
-#endif
+//#endif
 
 /** Return the current environment. This is a portable replacement for
  * 'environ'. */
 char **
 get_environment(void)
 {
-#ifdef HAVE__NSGETENVIRON
+//#ifdef HAVE__NSGETENVIRON
   /* This is for compatibility between OSX versions.  Otherwise (for example)
    * when we do a mostly-static build on OSX 10.7, the resulting binary won't
    * work on OSX 10.6. */
-  return *_NSGetEnviron();
-#else
+//  return *_NSGetEnviron();
+//#else
   return environ;
-#endif
+//#endif
 }
 
 /** Set *addr to the IP address (in dotted-quad notation) stored in c.

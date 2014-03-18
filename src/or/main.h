@@ -73,5 +73,12 @@ void do_hash_password(void);
 int tor_init(int argc, char **argv);
 #endif
 
+// Added for OnionKit
+extern periodic_timer_t *second_timer;
+extern smartlist_t *active_linked_connection_lst;
+extern int called_loop_once;
+void second_elapsed_callback(periodic_timer_t *timer, void *arg);
+int got_libevent_error(void);
+
 #endif
 
